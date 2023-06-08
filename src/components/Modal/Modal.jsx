@@ -13,25 +13,25 @@ export function Modal({ onClose, largeImg, tags }) {
     };
     window.addEventListener('keydown', handleKeydown);
 
-    return ()=> {window.removeEventListener('keydown', handleKeydown)};
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
   }, [onClose]);
 
-
- const handleBackDropClick = event => {
+  const handleBackDropClick = event => {
     if (event.target === event.currentTarget) {
-    onClose();
+      onClose();
     }
   };
-  
-    return createPortal(
-      <Overlay onClick={handleBackDropClick}>
-        <ModalWindow>
-          <Image src={largeImg} alt={tags} />
-        </ModalWindow>
-      </Overlay>,
-      modalRoot
-    );
-  
+
+  return createPortal(
+    <Overlay onClick={handleBackDropClick}>
+      <ModalWindow>
+        <Image src={largeImg} alt={tags} />
+      </ModalWindow>
+    </Overlay>,
+    modalRoot
+  );
 }
 Modal.propTypes = {
   onClose: PropTypes.func,
