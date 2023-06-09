@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { useState } from 'react';
 import {
   Search,
   SearchForm,
@@ -10,27 +10,26 @@ import {
 import { FiSearch } from 'react-icons/fi';
 import { IconContext } from 'react-icons';
 
-export class Searchbar extends Component {
-  state = {
-    name: '',
+export function Searchbar({ onSubmit }) {
+  const [name,setName]=useState('')
+
+ const hendlerOnChange = event => {
+    setName(event.target.value.toLowerCase());
   };
-  hendlerOnChange = event => {
-    this.setState({ name: event.target.value.toLowerCase() });
-  };
-  hendlerOnSubmit = e => {
+ const hendlerOnSubmit = e => {
     e.preventDefault();
-    if (this.state.name.trim() === '') {
+    if (name.trim() === '') {
       alert('Bведите название поиска');
       return;
     }
-    this.props.onSubmit(this.state.name);
-    this.setState({ name: '' });
+   onSubmit(name);
+    setName('');
   };
-  render() {
+
     return (
       <>
         <Search>
-          <SearchForm onSubmit={this.hendlerOnSubmit}>
+          <SearchForm onSubmit={hendlerOnSubmit}>
             <IconContext.Provider
               value={{ style: { color: 'black', width: '2em', height: '2em' } }}
             >
@@ -40,18 +39,18 @@ export class Searchbar extends Component {
               </SearchFormButton>
             </IconContext.Provider>
             <SearchFormInput
-              value={this.state.name}
+              value={name}
               className="SearchForm-input"
               type="text"
               autoComplete="off"
               autoFocus
               placeholder="Search images and photos"
-              onChange={this.hendlerOnChange}
+              onChange={hendlerOnChange}
             />
           </SearchForm>
         </Search>
       </>
     );
-  }
+  
 }
 Searchbar.propTypes = { onSubmit: PropTypes.func };

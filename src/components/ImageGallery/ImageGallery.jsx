@@ -18,8 +18,6 @@ export function ImageGallery() {
     if (!query) {
       return;
     }
-    setIsLoading(true);
-
     const getPhotos = async () => {
       const currentPage = page;
       const per_page = 12;
